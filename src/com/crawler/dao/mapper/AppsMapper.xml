@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- namespace命名规则: 表对应java类的名称-->
+<mapper namespace="com.crawler.dao.AppsDAO">
+	
+	
+	<!-- 查询是否在日期 -->
+	<select id="existTrainDates" resultType="Integer" parameterType="String">
+		select count(1) as cn 
+			from TB_12306_TRAINCODE where dates = #{dates} 
+	</select>
+	
+	<select id="saveExportedDates" >
+		insert into TB_EXPORT_LOG(
+			dates,flag)
+		values(
+			#{dates,jdbcType=VARCHAR},#{flag,jdbcType=VARCHAR}
+		)
+     </select>	
+         
+	
+	<insert id="saveTrain" >
+		insert into TB_12306_TRAINCODE(
+			trainnum,start_,end_,train_code,dates,type)
+		values(
+			#{trainnum,jdbcType=VARCHAR},#{start_,jdbcType=VARCHAR},
+			#{end_,jdbcType=VARCHAR},#{trainCode,jdbcType=VARCHAR},
+			#{dates,jdbcType=VARCHAR},#{type,jdbcType=VARCHAR}
+		)
+	</insert>
+	
+		<insert id="saveTrainDetail" >
+		insert into TB_12306_TRAINDETAIL(
+			train_code,dates,station_name,arrive_time,start_time,stopover_time,station_no,isenabled)
+		values(
+			#{trainCode,jdbcType=VARCHAR},#{dates,jdbcType=VARCHAR},#{stationName,jdbcType=VARCHAR},
+			#{arriveTime,jdbcType=VARCHAR},#{startTime,jdbcType=VARCHAR},
+			#{stopoverTime,jdbcType=VARCHAR},#{stationNo,jdbcType=VARCHAR},#{isenabled,jdbcType=VARCHAR}
+		)
+	</insert>
+	
+	<select id="get12306Station" resultType="String" parameterType="String">
+		select code 
+			from tb_12306_stationcode where name = #{name} 
+	</select>	
+	
+	<select id="get12306TrainCode" resultMap="AppsBasicMapper.TrainRs">
+		         select *
+           from TB_12306_TRAINCODE a
+          where dates = #{dates}
+            and not exists (select *
+                   from TB_12306_TRAINDETAIL b
+                  where b.dates =#{dates}
+                    and a.train_code = b.train_code)
+	</select>	
+	
+	<select id="get12306TrainByDates" resultMap="AppsBasicMapper.TrainRs">
+		         select *
+           from TB_12306_TRAINCODE a
+          where dates = #{dates}
+	</select>	
+	
+ 	<select id="getTrainDatesNotCrawler" resultType="String" parameterType="String">
+	  select *
+  		from (select distinct dates from TB_12306_TRAINCODE) a
+		 where not exists (select *
+          from (select distinct dates from TB_12306_TRAINDETAIL) b
+         	where a.dates = b.dates)
+	 </select>	
+	
+	<select id="get12306TrainData" resultMap="AppsBasicMapper.TrainDetail">
+		         select *
+           from TB_12306_TRAINDETAIL a
+          where dates = #{dates}
+	</select>	
+	
+	<select id="getExportDates" resultType="String" parameterType="String">
+		select *
+  		from (select distinct dates from TB_12306_TRAINDETAIL) a
+ 		where not exists (select *
+          from (select distinct dates from TB_EXPORT_LOG ) b
+         where a.dates = b.dates)
+     </select>	
+     
+     	
+	
+</mapper>

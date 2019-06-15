@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="AppsBasicMapper">
+	<resultMap id="TrainRs" type="com.crawler.vo.TrainCodeVO">
+	   	<result column="TRAINNUM" property="trainnum" javaType="String" jdbcType="VARCHAR"/>
+	    <result column="START_" property="start_" javaType="String" jdbcType="VARCHAR"/>
+	    <result column="END_" property="end_" javaType="String" jdbcType="VARCHAR"/>
+	    <result column="TRAIN_CODE" property="trainCode" javaType="String" jdbcType="VARCHAR"/>
+	    <result column="DATES" property="dates" javaType="String" jdbcType="VARCHAR"/>
+	    <result column="TYPE" property="type" javaType="String" jdbcType="VARCHAR"/>
+	</resultMap>
+	
+		<resultMap id="TrainDetail" type="com.crawler.vo.TrainVO">
+	    <result column="TRAIN_CODE" property="trainCode" javaType="String" jdbcType="VARCHAR"/>
+	    <result column="DATES" property="dates" javaType="String" jdbcType="VARCHAR"/>
+   	    <result column="STATION_NAME" property="stationName" javaType="String" jdbcType="VARCHAR"/>
+   	    <result column="START_TIME" property="startTime" javaType="String" jdbcType="VARCHAR"/>
+   	    <result column="ARRIVE_TIME" property="arriveTime" javaType="String" jdbcType="VARCHAR"/>
+   	    <result column="STOPOVER_TIME" property="stopoverTime" javaType="String" jdbcType="VARCHAR"/>
+   	    <result column="STATION_NO" property="stationNo" javaType="String" jdbcType="VARCHAR"/>
+   	    <result column="ISENABLED" property="isenabled" javaType="String" jdbcType="VARCHAR"/>
+	    
+	</resultMap>
+</mapper>
