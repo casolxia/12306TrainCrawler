@@ -9,6 +9,12 @@
 3./src/com/crawler/train/TrainDetail12306Page 为根据第二步获取的简略数据进一步获取车次的详细数据，因数据量大会有失败的情况，需要重试抓取  
 
 #数据展示
-1 车站编码数据
-!(https://github.com/casolxia/12306TrainCrawler/blob/master/images/station_code.png)
+1 车站编码数据  
+![image](https://github.com/casolxia/12306TrainCrawler/blob/master/images/station_code.png)
+
+2 车次简略数据  
+![image](https://github.com/casolxia/12306TrainCrawler/blob/master/images/traindates.png)
+
+3 车次详细数据  
+![image](https://github.com/casolxia/12306TrainCrawler/blob/master/images/traindetail.png)
 
